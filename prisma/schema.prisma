@@ -1,0 +1,321 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider   = "prisma-client"
+  output     = "../src/generated/prisma"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum GoalType {
+  QUANTITATIVE
+  BINARY
+  FINANCIAL
+}
+
+enum GoalPeriod {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+  CUSTOM
+}
+
+enum GoalMetric {
+  AT_LEAST
+  AT_MOST
+}
+
+model User {
+  id                  String           @id @default(cuid())
+  email               String           @unique
+  emailVerified       DateTime?
+  image               String?
+  name                String?
+  passwordHash        String
+  xp                  Int              @default(0)
+  level               Int              @default(1)
+  coins               Int              @default(0)
+  penaltiesEnabled    Boolean          @default(true)
+  theme               String           @default("system")
+  freezeLimitPerMonth Int              @default(1)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  accounts            Account[]
+  sessions            Session[]
+  goals               Goal[]
+  achievements        Achievement[]
+  xpEvents            XpEvent[]
+  savingsGoals        SavingsGoal[]
+  savingsEntries      SavingsEntry[]
+  rewards             Reward[]
+  rewardPurchases     RewardPurchase[]
+  goalPresets         GoalPreset[]
+  weeklyPlans         WeeklyPlan[]
+  streakFreezes       StreakFreeze[]
+  quests              Quest[]
+}
+
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?
+  access_token             String?
+  expires_at               Int?
+  refresh_token_expires_in Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?
+  session_state            String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Goal {
+  id                String     @id @default(cuid())
+  userId            String
+  title             String
+  description       String?
+  type              GoalType
+  period            GoalPeriod
+  metric            GoalMetric @default(AT_LEAST)
+  target            Float?
+  targetUnit        String?
+  startDate         DateTime
+  endDate           DateTime?
+  customPeriodStart DateTime?
+  customPeriodEnd   DateTime?
+  xpReward          Int        @default(10)
+  penalty           Int        @default(-2)
+  allowPartial      Boolean    @default(true)
+  allowNegative     Boolean    @default(false)
+  archived          Boolean    @default(false)
+  category          String?
+  icon              String?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  entries       GoalEntry[]
+  xpEvents      XpEvent[]
+  streakFreezes StreakFreeze[]
+}
+
+model GoalEntry {
+  id        String   @id @default(cuid())
+  goalId    String
+  date      DateTime
+  value     Float?
+  note      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  goal     Goal      @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  xpEvents XpEvent[]
+
+  @@unique([goalId, date])
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  userId      String
+  code        String
+  title       String
+  description String?
+  unlockedAt  DateTime @default(now())
+  data        Json?
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, code])
+}
+
+model XpEvent {
+  id          String   @id @default(cuid())
+  userId      String
+  goalEntryId String?
+  goalId      String?
+  delta       Int
+  reason      String
+  createdAt   DateTime @default(now())
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goalEntry GoalEntry? @relation(fields: [goalEntryId], references: [id], onDelete: SetNull)
+  goal      Goal?      @relation(fields: [goalId], references: [id], onDelete: SetNull)
+}
+
+// ===== SAVINGS (ФИНАНСЫ) =====
+
+enum SavingsGoalType {
+  GOAL_SAVINGS
+  SINKING_FUND
+  EMERGENCY_FUND
+}
+
+model SavingsGoal {
+  id           String          @id @default(cuid())
+  userId       String
+  name         String
+  type         SavingsGoalType
+  targetAmount Float
+  currency     String          @default("EUR")
+  startAmount  Float           @default(0)
+  startDate    DateTime        @default(now())
+  dueDate      DateTime?
+  category     String?
+  description  String?
+  icon         String?
+  isActive     Boolean         @default(true)
+  archived     Boolean         @default(false)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  user    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  entries SavingsEntry[]
+}
+
+model SavingsEntry {
+  id        String   @id @default(cuid())
+  goalId    String
+  userId    String
+  date      DateTime
+  amount    Float
+  note      String?
+  source    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  goal SavingsGoal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  user User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([goalId, date])
+}
+
+// ===== REWARDS (НАГРАДЫ) =====
+
+model Reward {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  description String?
+  priceCoins  Int
+  icon        String?
+  category    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  purchases RewardPurchase[]
+}
+
+model RewardPurchase {
+  id          String   @id @default(cuid())
+  userId      String
+  rewardId    String?
+  rewardName  String
+  coinsSpent  Int
+  purchasedAt DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reward Reward? @relation(fields: [rewardId], references: [id], onDelete: SetNull)
+}
+
+// ===== GOAL PRESETS (ШАБЛОНЫ ЦЕЛЕЙ) =====
+
+model GoalPreset {
+  id         String   @id @default(cuid())
+  userId     String?
+  name       String
+  category   String
+  presetData Json
+  isSystem   Boolean  @default(false)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ===== WEEKLY PLANS (ПЛАНЫ НЕДЕЛИ) =====
+
+model WeeklyPlan {
+  id            String    @id @default(cuid())
+  userId        String
+  weekStartDate DateTime
+  weekEndDate   DateTime
+  focusSpheres  Json
+  reviewAnswers Json?
+  autoSummary   Json?
+  isCompleted   Boolean   @default(false)
+  completedAt   DateTime?
+  createdAt     DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, weekStartDate])
+}
+
+// ===== STREAK FREEZES (ЗАМОРОЗКИ СЕРИЙ) =====
+
+model StreakFreeze {
+  id         String   @id @default(cuid())
+  goalId     String
+  userId     String
+  freezeDate DateTime
+  reason     String?
+  createdAt  DateTime @default(now())
+
+  goal Goal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([goalId, freezeDate])
+}
+
+// ===== QUESTS (ПЕРСОНАЛЬНЫЕ КВЕСТЫ) =====
+
+model Quest {
+  id                    String    @id @default(cuid())
+  userId                String
+  name                  String
+  description           String?
+  goalIds               Json
+  startDate             DateTime
+  endDate               DateTime
+  rewardXp              Int       @default(0)
+  rewardCoins           Int       @default(0)
+  rewardAchievementCode String?
+  isCompleted           Boolean   @default(false)
+  completedAt           DateTime?
+  createdAt             DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
