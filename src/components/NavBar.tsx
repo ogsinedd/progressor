@@ -57,7 +57,7 @@ export function NavBar({ name, level, xp }: Props) {
           })}
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
-            className="rounded-lg px-3 py-2 font-medium text-slate-500 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-700"
+            className="rounded-lg px-3 py-2 font-medium text-slate-500 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-700 cursor-pointer" 
           >
             Выйти
           </button>

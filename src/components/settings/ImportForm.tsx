@@ -48,17 +48,21 @@ export function ImportForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+      className="flex flex-col gap-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 shadow-sm"
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-semibold text-slate-900">Импорт JSON</p>
-          <p className="text-xs text-slate-500">Замещает текущие данные.</p>
+          <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+            Импорт JSON
+          </p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Замещает текущие данные.
+          </p>
         </div>
         <button
           type="submit"
           disabled={pending}
-          className="h-9 rounded-lg bg-blue-600 px-3 text-xs font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60"
+          className="h-9 rounded-lg bg-blue-600 px-3 text-xs font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60 cursor-pointer"
         >
           {pending ? "Импортируем..." : "Импорт"}
         </button>
@@ -67,10 +71,10 @@ export function ImportForm() {
         type="file"
         name="file"
         accept="application/json"
-        className="text-sm text-slate-700"
+        className="text-sm text-slate-700 dark:text-slate-300"
       />
+      
       {error && <p className="text-xs text-rose-600">{error}</p>}
     </form>
   );
 }
-

@@ -1,9 +1,17 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
 /* CSS Variables для light/dark тем */
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  color-scheme: dark;
 }
 
 /* Темная тема - next-themes добавляет класс dark на html */

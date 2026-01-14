@@ -24,7 +24,7 @@ export function DeleteGoalButton({ goalId }: { goalId: string }) {
           });
         }
       }}
-      className="rounded-lg bg-rose-600 px-3 py-1 text-xs font-semibold text-white transition hover:bg-rose-700 disabled:opacity-60 dark:bg-rose-500 dark:hover:bg-rose-600"
+      className="rounded-lg bg-rose-600 px-3 py-1 text-xs font-semibold text-white transition hover:bg-rose-700 disabled:opacity-60 dark:bg-rose-500 dark:hover:bg-rose-600 cursor-pointer"
     >
       {pending ? "⏳" : "🗑️"} Удалить
     </button>

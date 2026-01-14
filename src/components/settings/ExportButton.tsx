@@ -37,7 +37,7 @@ export function ExportButton() {
         type="button"
         onClick={handleExport}
         disabled={pending}
-        className="h-10 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:opacity-60"
+        className="h-10 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:opacity-60 cursor-pointer"
       >
         {pending ? "Готовим JSON..." : "Экспорт JSON"}
       </button>
