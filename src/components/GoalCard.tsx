@@ -51,7 +51,7 @@ export function GoalCard({
           )}
         </div>
         <div className="flex flex-shrink-0 items-start gap-3">
-          {actionButton && <div className="self-start">{actionButton}</div>}
+          
           {streak !== undefined && streak > 0 && (
             <div className="text-right text-sm">
               <p className="text-xs text-slate-500 dark:text-slate-400">Серия</p>
@@ -74,6 +74,7 @@ export function GoalCard({
             >
               {progress.percent}% готово
             </p>
+            {actionButton && <div className="self-start">{actionButton}</div>}
           </div>
         </div>
       </div>
