@@ -41,13 +41,7 @@ export function SavingsGoalForm() {
             Создайте цель для отслеживания накоплений
           </p>
         </div>
-        <button
-          type="submit"
-          disabled={pending}
-          className="h-10 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60 dark:bg-blue-500 dark:hover:bg-blue-600"
-        >
-          {pending ? "Создаём..." : "Создать"}
-        </button>
+       
       </div>
 
       {error && (
@@ -164,6 +158,13 @@ export function SavingsGoalForm() {
           className="h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100"
         />
       </label>
+       <button
+          type="submit"
+          disabled={pending}
+          className="h-10 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60 dark:bg-blue-500 dark:hover:bg-blue-600"
+        >
+          {pending ? "Создаём..." : "Создать"}
+        </button>
     </form>
   );
 }

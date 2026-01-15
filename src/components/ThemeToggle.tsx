@@ -42,7 +42,7 @@ export function ThemeToggle() {
       <div className="flex gap-2">
         <button
           onClick={() => setTheme("light")}
-          className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium transition ${
+          className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium transition cursor-pointer ${
             theme === "light"
               ? "border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-400"
               : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600"
@@ -54,7 +54,7 @@ export function ThemeToggle() {
 
         <button
           onClick={() => setTheme("dark")}
-          className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium transition ${
+          className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium transition cursor-pointer ${
             theme === "dark"
               ? "border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-400"
               : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600"
@@ -66,7 +66,7 @@ export function ThemeToggle() {
 
         <button
           onClick={() => setTheme("system")}
-          className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium transition ${
+          className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium transition cursor-pointer ${
             theme === "system"
               ? "border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-400"
               : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600"

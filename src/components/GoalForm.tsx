@@ -61,13 +61,7 @@ export function GoalForm() {
             Универсальная схема для количественных, бинарных и финансовых целей.
           </p>
         </div>
-        <button
-          type="submit"
-          disabled={pending}
-          className="h-10 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60 dark:bg-blue-500 dark:hover:bg-blue-600"
-        >
-          {pending ? "Сохраняем..." : "Сохранить"}
-        </button>
+     
       </div>
 
       {error && (
@@ -104,7 +98,7 @@ export function GoalForm() {
             name="period"
             value={period}
             onChange={(e) => setPeriod(e.target.value as GoalPeriod)}
-            className="h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:focus:border-slate-500 dark:focus:ring-blue-800"
+            className="h-11 cursor-pointer rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:focus:border-slate-500 dark:focus:ring-blue-800"
           >
             {periodOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -120,7 +114,7 @@ export function GoalForm() {
             name="type"
             value={type}
             onChange={(e) => setType(e.target.value as GoalType)}
-            className="h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:focus:border-slate-500 dark:focus:ring-blue-800"
+            className="h-11 cursor-pointer rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:focus:border-slate-500 dark:focus:ring-blue-800"
           >
             {typeOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -225,7 +219,7 @@ export function GoalForm() {
             name="allowPartial"
             type="checkbox"
             defaultChecked
-            className="h-4 w-4 accent-blue-600"
+            className="h-4 w-4 accent-blue-600 cursor-pointer"
           />
           Разрешить частичное выполнение
         </label>
@@ -233,11 +227,18 @@ export function GoalForm() {
           <input
             name="allowNegative"
             type="checkbox"
-            className="h-4 w-4 accent-blue-600"
+            className="h-4 w-4 accent-blue-600 cursor-pointer"
           />
           Разрешить отрицательные значения
         </label>
       </div>
+         <button
+          type="submit"
+          disabled={pending}
+          className="h-10 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60 dark:bg-blue-500 dark:hover:bg-blue-600 cursor-pointer"
+        >
+          {pending ? "Сохраняем..." : "Сохранить"}
+        </button>
     </form>
   );
 }

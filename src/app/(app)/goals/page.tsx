@@ -72,7 +72,7 @@ export default async function GoalsPage() {
               progress={calculateProgress(goal, now)}
               showForm={false}
               actionButton={
-                <div className="flex gap-2">
+                <div className="flex flex-col md:flex-row gap-2">
                   <UnarchiveGoalButton goalId={goal.id} />
                   <DeleteGoalButton goalId={goal.id} />
                 </div>

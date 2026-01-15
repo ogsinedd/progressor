@@ -34,7 +34,7 @@ export default async function SettingsPage() {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="flex flex-col sm:grid gap-4 md:grid-cols-2 ">
         <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">Экспорт</p>
           <p className="text-xs text-slate-500 dark:text-slate-400">
