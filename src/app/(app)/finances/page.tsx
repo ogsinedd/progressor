@@ -90,7 +90,7 @@ export default async function FinancesPage() {
 
       {/* Графики */}
       {timelineData.length > 0 && (
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
           <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
             <h2 className="mb-3 text-base font-semibold text-slate-900 dark:text-slate-100">
               Динамика накоплений (30 дней)
