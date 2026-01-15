@@ -61,13 +61,7 @@ export function GoalForm() {
             Универсальная схема для количественных, бинарных и финансовых целей.
           </p>
         </div>
-        <button
-          type="submit"
-          disabled={pending}
-          className="h-10 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60 dark:bg-blue-500 dark:hover:bg-blue-600 cursor-pointer"
-        >
-          {pending ? "Сохраняем..." : "Сохранить"}
-        </button>
+     
       </div>
 
       {error && (
@@ -238,6 +232,13 @@ export function GoalForm() {
           Разрешить отрицательные значения
         </label>
       </div>
+         <button
+          type="submit"
+          disabled={pending}
+          className="h-10 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60 dark:bg-blue-500 dark:hover:bg-blue-600 cursor-pointer"
+        >
+          {pending ? "Сохраняем..." : "Сохранить"}
+        </button>
     </form>
   );
 }
